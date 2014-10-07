@@ -6,6 +6,7 @@ package spring.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -25,11 +26,12 @@ public class Customer {
 	    private String name;
 	    private String surname;
 	    
-	    @OneToOne(cascade=CascadeType.ALL)
-	    @JoinTable(name="USERS",
-	        joinColumns = {@JoinColumn(name="userid", referencedColumnName="id")}
-	        //,inverseJoinColumns = {@JoinColumn(name="customer_id", referencedColumnName="id")}
-	    )
+//	    @OneToOne(cascade=CascadeType.ALL)
+//	    @JoinTable(name="USERS",
+//	        joinColumns = {@JoinColumn(name="userid", referencedColumnName="id")}
+//	        //,inverseJoinColumns = {@JoinColumn(name="customer_id", referencedColumnName="id")}
+//	    )
+	    
 	    private User user;
 
 	    @Id
@@ -67,6 +69,8 @@ public class Customer {
 		/**
 		 * @return the user assosciated to this customer
 		 */
+	    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Role.class)
+	    @JoinTable(name = "USERS", joinColumns = { @JoinColumn(name = "USERID") }, inverseJoinColumns = { @JoinColumn(name = "ID") })
 		public User getUser() {
 			return user;
 		}
