@@ -62,5 +62,9 @@ public class CustomerServiceImpl implements CustomerService{
     public void setCustomerDAO(CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
     }
+    
+    public Customer getCustomerByUserId(int id){
+    	return customerDAO.getCustomerById(id);
+    }
  
 }

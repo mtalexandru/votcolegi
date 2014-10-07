@@ -17,6 +17,7 @@ import org.primefaces.event.RowEditEvent;
 import org.springframework.dao.DataAccessException;
 
 import spring.model.Customer;
+import spring.model.User;
 import spring.service.CustomerService;
 
 /**
@@ -39,6 +40,7 @@ public class CustomerManagedBean implements Serializable {
     private int id;
     private String name;
     private String surname;
+    private User user;
  
     public String addCustomer() {
         try {
@@ -46,6 +48,7 @@ public class CustomerManagedBean implements Serializable {
             customer.setId(getId());
             customer.setName(getName());
             customer.setSurname(getSurname());
+            customer.setUser(user);
             getCustomerService().addCustomer(customer);
             reset();
             return SUCCESS;
@@ -92,6 +95,7 @@ public class CustomerManagedBean implements Serializable {
         this.setId(0);
         this.setName("");
         this.setSurname("");
+        this.setUser(null);
     }
 
     public List<Customer> getCustomerList() {
@@ -137,5 +141,21 @@ public class CustomerManagedBean implements Serializable {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
+    
 
 }

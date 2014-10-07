@@ -27,5 +27,4 @@ public interface CustomerDAO {
     public Customer getCustomerById(int id);
 
     public List<Customer> getCustomers();
- 
 }

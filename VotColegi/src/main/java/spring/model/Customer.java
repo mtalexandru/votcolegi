@@ -3,9 +3,13 @@
  */
 package spring.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -20,6 +24,13 @@ public class Customer {
 	    private int id;
 	    private String name;
 	    private String surname;
+	    
+	    @OneToOne(cascade=CascadeType.ALL)
+	    @JoinTable(name="USERS",
+	        joinColumns = {@JoinColumn(name="userid", referencedColumnName="id")}
+	        //,inverseJoinColumns = {@JoinColumn(name="customer_id", referencedColumnName="id")}
+	    )
+	    private User user;
 
 	    @Id
 	    @Column(name="ID", unique = true, nullable = false)
@@ -49,13 +60,31 @@ public class Customer {
 	        this.surname = surname;
 	    } 
 	 
-	    @Override
-	    public String toString() {
-	        StringBuffer strBuff = new StringBuffer();
-	        strBuff.append("id : ").append(getId());
-	        strBuff.append(", name : ").append(getName());
-	        strBuff.append(", surname : ").append(getSurname());
-	        return strBuff.toString();
+	    
+	    
+
+
+		/**
+		 * @return the user assosciated to this customer
+		 */
+		public User getUser() {
+			return user;
+		}
+
+		/**
+		 * @param user the user to set for this customer
+		 */
+		public void setUser(User user) {
+			this.user = user;
+		}
+
+		@Override
+		public String toString() {
+			StringBuffer strBuff = new StringBuffer();
+			strBuff.append(getName());
+			strBuff.append("  ").append(getSurname());
+			strBuff.append("  ").append(getUser().getLogin());
+			return strBuff.toString();
 	    }
 
 }

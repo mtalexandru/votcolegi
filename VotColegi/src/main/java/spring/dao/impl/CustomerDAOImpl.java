@@ -51,5 +51,4 @@ public class CustomerDAOImpl implements CustomerDAO{
         List list = getSessionFactory().getCurrentSession().createQuery("from Customer").list();
         return list;
     }
- 
 }
