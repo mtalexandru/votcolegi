@@ -25,7 +25,7 @@ import spring.service.CustomerService;
 		
 		
 		static Logger log = Logger.getLogger(
-	            CustomerDAO.class.getName());
+				OrderListView.class.getName());
 		
 		
 		@ManagedProperty(value="#{CustomerService}")

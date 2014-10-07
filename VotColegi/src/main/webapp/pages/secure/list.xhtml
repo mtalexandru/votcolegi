@@ -96,6 +96,28 @@
         <br/>
         <p:commandButton value="Logout" id="logout" action="#{loginMgmtBean.logout}"/>           
     </h:form>
+    
+    <h:form id="form3">
+    	<p:panel header="Order List">
+         	<h3 style="margin-top: 0">Basic OrderList</h3>
+		    <p:orderList value="#{orderListView.customers}"
+					     var="customer" controlsLocation="none" 
+					     itemLabel="#{customer}"
+					     width="600" 
+					     style="min-width:600px; width:600px !important;"
+					     itemValue="#{customer}" />
+		    <p:commandButton value="Submit" 
+		    				 update="displayCustomers" 
+		    				 oncomplete="PF('customerDialog').show()" 
+		    				 style="margin-top:5px" />
+		    				 
+	    <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="customerDialog" header="Persons" width="600">
+	        <p:dataList id="displayCustomers" value="#{orderListView.customers}" var="customer">
+	            <h:outputText value="#{customer}" />
+	        </p:dataList>
+	    </p:dialog>		    				 
+   		</p:panel>
+    </h:form>
 </h:body>
 
 </html>
