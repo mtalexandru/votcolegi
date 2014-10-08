@@ -29,12 +29,7 @@ public class CustomerServiceImpl implements CustomerService{
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional(readOnly = false)
     public void addCustomer(Customer customer) {
-    	if (getCustomerById(customer.getId()) == null) {
-    		getCustomerDAO().addCustomer(customer);
-    	}
-    	else {
-    		getCustomerDAO().updateCustomer(customer);
-    	}
+    	getCustomerDAO().addCustomer(customer);
     }
 
     @Transactional(readOnly = false)
@@ -50,7 +45,10 @@ public class CustomerServiceImpl implements CustomerService{
     public Customer getCustomerById(int id) {
         return getCustomerDAO().getCustomerById(id);
     }
-
+    
+    public List<Customer> getOtherCustomers(int id){
+        return getCustomerDAO().getOtherCustomers(id);
+    }
     public List<Customer> getCustomers() {
         return getCustomerDAO().getCustomers();
     }

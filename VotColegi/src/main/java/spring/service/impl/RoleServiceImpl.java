@@ -15,7 +15,7 @@ import spring.service.RoleService;
  * @author mariusa
  *
  */
-@Service
+@Service("RoleService")
 @Transactional
 public class RoleServiceImpl implements RoleService {
    

@@ -29,6 +29,8 @@ public interface CustomerService {
     public Customer getCustomerById(int id);
 
     public List<Customer> getCustomers();
+    
+    public List<Customer> getOtherCustomers(int id);
 
     public CustomerDAO getCustomerDAO();
 

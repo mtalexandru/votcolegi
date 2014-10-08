@@ -6,16 +6,24 @@ CREATE TABLE IF NOT EXISTS `sortareColegi`.`SEQUENCE` (
 		COMMENT = 'Gestiunea secventelor pentru id-uri.' ;
 		
 		
-		CREATE TABLE USERS
+		
+CREATE TABLE CUSTOMER
 (
-id int NOT NULL PRIMARY KEY,
+id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+name varchar2(45) NOT NULL,
+surname varchar2(45)
+);		
+		
+CREATE TABLE USERS
+(
+id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
 login varchar2(20) NOT NULL,
 password varchar2(20) NOT NULL
 );
 
 CREATE TABLE ROLES
 (
-id int NOT NULL PRIMARY KEY,
+id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
 role varchar2(20) NOT NULL
 );
 

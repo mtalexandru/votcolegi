@@ -15,10 +15,14 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import spring.model.Customer;
 import spring.model.User;
 import spring.service.CustomerService;
+import spring.service.RoleService;
+import spring.service.UserService;
 
 /**
  * @author mariusa
@@ -34,18 +38,32 @@ public class CustomerManagedBean implements Serializable {
 
     @ManagedProperty(value="#{CustomerService}")
     CustomerService customerService;
+    
+    @ManagedProperty(value="#{UserService}")
+    UserService userService;
+    
+    @ManagedProperty(value="#{RoleService}")
+    RoleService roleService;
+    
 
     List<Customer> customerList;
 
     private int id;
     private String name;
     private String surname;
-    private User user;
  
     public String addCustomer() {
         try {
+        	
+        	User user = new User();
+        	user.setLogin(getSurname() + "." + getName());
+        	user.setPassword(getSurname()+"123");
+        	user.setRole(getRoleService().getRole(2)); // 2 = moderator
+        	
+        	getUserService().addUser(user);
+        
+        	
             Customer customer = new Customer();
-            customer.setId(getId());
             customer.setName(getName());
             customer.setSurname(getSurname());
             customer.setUser(user);
@@ -95,13 +113,22 @@ public class CustomerManagedBean implements Serializable {
         this.setId(0);
         this.setName("");
         this.setSurname("");
-        this.setUser(null);
     }
 
     public List<Customer> getCustomerList() {
         if(customerList == null){
             customerList = new ArrayList<Customer>();
             customerList.addAll(getCustomerService().getCustomers());
+        }
+        return customerList;
+    }
+    
+    public List<Customer> geOthertCustomerList() {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	User authenticatedUser = (User)authentication.getPrincipal();
+        if(customerList == null){
+            customerList = new ArrayList<Customer>();
+            customerList.addAll(getCustomerService().getOtherCustomers(authenticatedUser.getCustomer().getId()));
         }
         return customerList;
     }
@@ -113,9 +140,25 @@ public class CustomerManagedBean implements Serializable {
     public void setCustomerService(CustomerService customerService) {
         this.customerService = customerService;
     }
+    
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     public void setCustomerList(List<Customer> customerList) {
         this.customerList = customerList;
+    }
+    
+    public RoleService getRoleService() {
+        return roleService;
+    }
+
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
     }
 
     public int getId() {
@@ -142,19 +185,6 @@ public class CustomerManagedBean implements Serializable {
         this.surname = surname;
     }
 
-	/**
-	 * @return the user
-	 */
-	public User getUser() {
-		return user;
-	}
-
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(User user) {
-		this.user = user;
-	}
     
     
 

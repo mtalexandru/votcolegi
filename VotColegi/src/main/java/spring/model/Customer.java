@@ -7,11 +7,14 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 /**
  * @author mariusa
@@ -22,20 +25,25 @@ import javax.persistence.Table;
 @Table(name="CUSTOMER")
 public class Customer {
 
+	
+	    @Id
+	    @GeneratedValue(generator="gen")
+	    @GenericGenerator(name="gen", strategy="foreign", parameters=@Parameter(name="property", value="user"))
+	    @Column(name="ID", unique = true, nullable = false)
 	    private int id;
+	    
+	    @Column(name="NAME", unique = false, nullable = false)
 	    private String name;
+	    
+	    @Column(name="SURNAME", unique = false, nullable = false)
 	    private String surname;
 	    
-//	    @OneToOne(cascade=CascadeType.ALL)
-//	    @JoinTable(name="USERS",
-//	        joinColumns = {@JoinColumn(name="userid", referencedColumnName="id")}
-//	        //,inverseJoinColumns = {@JoinColumn(name="customer_id", referencedColumnName="id")}
-//	    )
 	    
+	    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	    @PrimaryKeyJoinColumn
 	    private User user;
 
-	    @Id
-	    @Column(name="ID", unique = true, nullable = false)
+
 	    public int getId() {
 	        return id;
 	    }
@@ -44,7 +52,7 @@ public class Customer {
 	        this.id = id;
 	    }
 
-	    @Column(name="NAME", unique = true, nullable = false)
+	    
 	    public String getName() {
 	        return name;
 	    }
@@ -53,7 +61,7 @@ public class Customer {
 	        this.name = name;
 	    }
 
-	    @Column(name="SURNAME", unique = true, nullable = false)
+	    
 	    public String getSurname() {
 	        return surname;
 	    }
@@ -69,8 +77,6 @@ public class Customer {
 		/**
 		 * @return the user assosciated to this customer
 		 */
-	    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Role.class)
-	    @JoinTable(name = "USERS", joinColumns = { @JoinColumn(name = "USERID") }, inverseJoinColumns = { @JoinColumn(name = "ID") })
 		public User getUser() {
 			return user;
 		}
