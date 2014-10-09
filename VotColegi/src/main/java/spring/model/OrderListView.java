@@ -44,9 +44,10 @@ import spring.service.UserService;
 	    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    	String currentPrincipalName = authentication.getName();
 	    	User authenticatedUser = getUserService().getUser(currentPrincipalName);
-	    	
+	    	int curentCustomerId = getCustomerService().getCustomerByUserId(authenticatedUser.getId()).getId();
 	        customers = new ArrayList<Customer>();
-	        customers.addAll(customerService.getOtherCustomers(authenticatedUser.getCustomer().getId()));
+	        // TODO: DE MODIFICAT LINIA DE MAI JOS Sa faca un query dupa id_utilizator in clienti si sa aduca clientul si sa ia id-ul acelui client (getClientByIdUtilizator())
+	        customers.addAll(getCustomerService().getOtherCustomers(curentCustomerId));
 	        log.info("[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]] Am initializat lista de Utilizatori: " + customers.size());
 	    }
 	 

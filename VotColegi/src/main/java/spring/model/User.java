@@ -33,10 +33,7 @@ public class User {
    
     @Column(name="password")
     private String password;
-   
-    @OneToOne(mappedBy="user", cascade=CascadeType.ALL)
-    private Customer customer;
-    
+      
     @OneToOne(cascade=CascadeType.ALL)
     @JoinTable(name="USER_ROLES",
         joinColumns = {@JoinColumn(name="user_id", referencedColumnName="id")},
@@ -75,21 +72,4 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
-
-	/**
-	 * @return the customer
-	 */
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	/**
-	 * @param customer the customer to set
-	 */
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}  
-    
-    
-
 }

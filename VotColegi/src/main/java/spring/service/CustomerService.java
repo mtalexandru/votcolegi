@@ -36,6 +36,6 @@ public interface CustomerService {
 
     public void setCustomerDAO(CustomerDAO customerDAO);
     
-    public Customer getCustomerByUserId(int id);
+    public Customer getCustomerByUserId(int user_id);
  
 }

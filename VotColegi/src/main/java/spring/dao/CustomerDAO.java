@@ -29,4 +29,6 @@ public interface CustomerDAO {
     public List<Customer> getCustomers();
     
     public List<Customer> getOtherCustomers(int id);
+    
+    public Customer getCustomerByUserId(int user_id);
 }

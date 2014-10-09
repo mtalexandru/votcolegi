@@ -3,18 +3,21 @@
  */
 package spring.model;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 /**
  * @author mariusa
@@ -26,9 +29,8 @@ import org.hibernate.annotations.Parameter;
 public class Customer {
 
 	
-	    @Id
-	    @GeneratedValue(generator="gen")
-	    @GenericGenerator(name="gen", strategy="foreign", parameters=@Parameter(name="property", value="user"))
+		@Id
+		@GeneratedValue(strategy=GenerationType.AUTO)
 	    @Column(name="ID", unique = true, nullable = false)
 	    private int id;
 	    
@@ -39,8 +41,15 @@ public class Customer {
 	    private String surname;
 	    
 	    
+	    @OneToMany(cascade=CascadeType.ALL)
+	    @JoinTable(name="CUSTOMER_PREFERENCES",
+	        joinColumns = {@JoinColumn(name="preference_id", referencedColumnName="id")},
+	        inverseJoinColumns = {@JoinColumn(name="customer_id", referencedColumnName="id")}
+	    )
+	    private Set<Customer> customerPreferences;
+	    
 	    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-	    @PrimaryKeyJoinColumn
+	    @JoinColumn(name="user_id", referencedColumnName="id")
 	    private User user;
 
 
@@ -87,6 +96,14 @@ public class Customer {
 		public void setUser(User user) {
 			this.user = user;
 		}
+		
+		  public Set<Customer> getCustomerPreferences() {
+		        return customerPreferences;
+		    }
+
+		    public void setCustomerPreferences(Set<Customer> customerPreferences) {
+		        this.customerPreferences = customerPreferences;
+		    }
 
 		@Override
 		public String toString() {

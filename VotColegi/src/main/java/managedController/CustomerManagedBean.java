@@ -128,7 +128,8 @@ public class CustomerManagedBean implements Serializable {
     	User authenticatedUser = (User)authentication.getPrincipal();
         if(customerList == null){
             customerList = new ArrayList<Customer>();
-            customerList.addAll(getCustomerService().getOtherCustomers(authenticatedUser.getCustomer().getId()));
+            int curentCustomerId = getCustomerService().getCustomerByUserId(authenticatedUser.getId()).getId();
+            customerList.addAll(getCustomerService().getOtherCustomers(curentCustomerId));
         }
         return customerList;
     }
