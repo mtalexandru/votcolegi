@@ -1,0 +1,7 @@
+-----------------SQL-----------------
+Trebuie facute scriprurile in ordine
+Trebuie facute scripturi de creare/clear
+TRebuie gandite secvente si autoincrementuri - de invatat cum se folosesc secventele
+---------------------------------------------------
+
+nu expira sesiunea chiar si la restart server ---> ceea ce e ok pt. dezvoltare
